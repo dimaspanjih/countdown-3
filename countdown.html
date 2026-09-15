@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Promo Payday</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+  }
+
+  .countdown-wrapper {
+    position: fixed;
+    bottom: 300px;
+    right: 18px;
+    z-index: 9999;
+    width: 184px;
+  }
+
+  .countdown {
+    text-align: center;
+    background: #d81f26;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 4px 0;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<div id="countdown-wrapper" class="countdown-wrapper">
+  <div id="countdown" class="countdown">00:00:00</div>
+</div>
+
+<script>
+(function() {
+  // Ganti tanggal & jam target sesuai akhir promo
+  const targetDate = new Date("2026-09-30T23:59:59").getTime();
+
+  const countdownEl = document.getElementById("countdown");
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      countdownEl.innerHTML = "Promo Berakhir";
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const pad = (n) => n.toString().padStart(2, "0");
+
+    countdownEl.innerHTML = days > 0
+      ? `${days}h ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+      : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+})();
+</script>
+
+</body>
+</html>
